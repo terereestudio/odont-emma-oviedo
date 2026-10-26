@@ -1,0 +1,8 @@
+Fuentes pendientes (self-hosting, licencia OFL). Descargar desde gwfh.mranftl.com o Fontsource,
+formato woff2, subset latin, y guardar con estos nombres exactos:
+  jost-latin-300-normal.woff2
+  jost-latin-400-normal.woff2
+  jost-latin-500-normal.woff2
+  cormorant-garamond-latin-500-normal.woff2
+  cormorant-garamond-latin-500-italic.woff2
+Mientras falten, la página usa fuentes del sistema como respaldo.

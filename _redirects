@@ -1,0 +1,3 @@
+# Netlify ya fuerza HTTPS. Redirección del dominio www al principal:
+# https://www.[COMPLETAR-dominio]/*  https://[COMPLETAR-dominio]/:splat  301!
+/privacidad  /privacidad.html  200
