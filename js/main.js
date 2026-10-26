@@ -91,6 +91,9 @@
       return b;
     });
     track.after(nav);
+    // data-cycle: en PC, en lugar de deslizar, se destaca una tarjeta por vez
+    const cycle = track.hasAttribute("data-cycle");
+    if (cycle) nav.classList.add("carousel-nav--cycle");
 
     let current = -1;
     const setActive = (i) => {
@@ -100,10 +103,17 @@
       dots.forEach((d, k) => d.setAttribute("aria-current", k === i ? "true" : "false"));
     };
     const go = (i) => {
+      if (!mobile.matches) { if (cycle) setActive(i); return; }
       const s = slides[i];
       track.scrollTo({ left: s.offsetLeft - (track.clientWidth - s.clientWidth) / 2, behavior: reduce ? "auto" : "smooth" });
     };
     const update = () => {
+      if (!mobile.matches) {
+        // En PC las tarjetas reaccionan solo al mouse (salvo los pasos, que se destacan de a uno)
+        if (cycle) { if (current < 0) setActive(0); }
+        else { current = -1; slides.forEach((s) => s.classList.remove("is-active")); }
+        return;
+      }
       const center = track.scrollLeft + track.clientWidth / 2;
       let best = 0, dist = Infinity;
       slides.forEach((s, k) => {
@@ -119,6 +129,7 @@
       requestAnimationFrame(() => { update(); ticking = false; });
     }, { passive: true });
     update();
+    mobile.addEventListener("change", () => { current = -1; update(); });
 
     let stopped = true;
     let pauseBtn = null;
@@ -143,10 +154,11 @@
       });
       nav.appendChild(pauseBtn);
       new IntersectionObserver((en) => { visible = en[0].isIntersecting; }, { threshold: 0.6 }).observe(track);
-      ["pointerdown", "touchstart", "wheel", "focusin"].forEach((ev) => track.addEventListener(ev, stop, { passive: true }));
+      ["pointerdown", "touchstart", "focusin"].forEach((ev) => track.addEventListener(ev, stop, { passive: true }));
+      track.addEventListener("wheel", () => { if (mobile.matches) stop(); }, { passive: true });
       setInterval(() => {
-        if (!stopped && visible && mobile.matches && !document.hidden) go((current + 1) % slides.length);
-      }, 4200);
+        if (!stopped && visible && !document.hidden && (mobile.matches || cycle)) go((current + 1) % slides.length);
+      }, 3600);
     }
   });
 
