@@ -41,6 +41,9 @@
       const iframe = document.createElement("iframe");
       iframe.src = "https://www.instagram.com/reel/DXrnTSljXDs/embed/";
       iframe.title = "Video de Emma Oviedo sobre alineadores dentales (Instagram)";
+      iframe.width = "360";
+      iframe.height = "760";
+      iframe.loading = "lazy";
       iframe.referrerPolicy = "strict-origin-when-cross-origin";
       iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox");
       iframe.setAttribute("allow", "encrypted-media; fullscreen; picture-in-picture");
